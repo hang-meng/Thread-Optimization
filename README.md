@@ -24,7 +24,7 @@
 
 ## Flags 配置
 
-所有 Flags 文件位于 `/data/adb/modules/AppOpt_Aloazny/Flags/`，创建或删除后需重新刷入模块生效。
+所有 Flags 文件位于 `/data/adb/modules/Thread-Optimization/Flags/`，创建或删除后需重新刷入模块生效。
 
 | Flags 文件 | 作用 | 默认 |
 |---|---|---|

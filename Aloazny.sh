@@ -12,7 +12,7 @@ grep_prop >/dev/null 2>&1 || grep_prop() { local REGEX="s/^$1=//p"; shift ;local
 
 #定义模块安装目录
 CUSTOM_PROGRAM="AppOpt"
-MY_MODULE_FOLDER="/data/adb/modules/AppOpt_Aloazny"
+MY_MODULE_FOLDER="/data/adb/modules/Thread-Optimization"
 #定义检查函数全局提示变量
 Last_Check_Tips=""
 
@@ -223,7 +223,7 @@ fi
 }
 
 function get_other_module(){
-for i in /data/adb/*modules/asoul_affinity_opt /data/adb/*modules/AppOpt_Aloazny /data/adb/*modules/AppOpt /data/adb/*modules/thread_opt
+for i in /data/adb/*modules/asoul_affinity_opt /data/adb/*modules/Thread-Optimization /data/adb/*modules/AppOpt /data/adb/*modules/thread_opt
 do
 	description_file="${i}/module.prop"
 	if [ -f "${description_file}" ] && [ ! -f "${i}/disable" ];then

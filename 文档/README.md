@@ -11,19 +11,19 @@
 - `-s`指定扫描`/proc`的时间间隔。
 - `uthash.h`管理配置文件数据。
 - **进程名**支持通配符，**线程名**支持优先级排序，全词(精确)匹配优于通配符。
-- 支持**机械性适配**`6+2` `3+4+1` `2+3+2+1` `4+4`核心配置，**`4+3+1` 的配置是默认配置(同核心配置无需修改)**，通过创建`/data/adb/modules/AppOpt_Aloazny/Flags/modtify_config`空文件启用机械性配置修改，**默认启用**。
-- 支持**配置文件优先级**，创建`/data/adb/modules/AppOpt_Aloazny/Flags/update_config`空文件，就会使用模块的配置，而不是读取用户上一次自定义的配置，**默认使用模块配置**。
-- 创建`/data/adb/modules/AppOpt_Aloazny/Flags/delete_game_config`空文件，**就会删除自带的游戏配置**。
-- 创建`/data/adb/modules/AppOpt_Aloazny/Flags/dexota_modtify`空文件，用于修改`dex2oat`的prop值，具体请参考[Google官方文档 ART](https://source.android.com/docs/core/runtime/configure?hl=zh-cn#compiler_filters)。
-- 创建`/data/adb/modules/AppOpt_Aloazny/{disable_program/enable_program}`空文件，用于控制是否禁用一些冲突(**如果存在**)的系统进程，具体请自行查看`program_ctrl.sh`脚本，默认不做任何修改。
-- 创建`/data/adb/modules/AppOpt_Aloazny/Flags/keep_custom_rule`用于安装时，增量更新用户修改/添加的规则。
-- 创建`/data/adb/modules/AppOpt_Aloazny/Flags/keep_Asoulopt`用于处理和[Asoulopt](https://github.com/nakixii/Magisk_AsoulOpt)冲突的包名，会删掉和**Asoulopt**冲突的规则，不影响**Asoulopt**运行。
+- 支持**机械性适配**`6+2` `3+4+1` `2+3+2+1` `4+4`核心配置，**`4+3+1` 的配置是默认配置(同核心配置无需修改)**，通过创建`/data/adb/modules/Thread-Optimization/Flags/modtify_config`空文件启用机械性配置修改，**默认启用**。
+- 支持**配置文件优先级**，创建`/data/adb/modules/Thread-Optimization/Flags/update_config`空文件，就会使用模块的配置，而不是读取用户上一次自定义的配置，**默认使用模块配置**。
+- 创建`/data/adb/modules/Thread-Optimization/Flags/delete_game_config`空文件，**就会删除自带的游戏配置**。
+- 创建`/data/adb/modules/Thread-Optimization/Flags/dexota_modtify`空文件，用于修改`dex2oat`的prop值，具体请参考[Google官方文档 ART](https://source.android.com/docs/core/runtime/configure?hl=zh-cn#compiler_filters)。
+- 创建`/data/adb/modules/Thread-Optimization/{disable_program/enable_program}`空文件，用于控制是否禁用一些冲突(**如果存在**)的系统进程，具体请自行查看`program_ctrl.sh`脚本，默认不做任何修改。
+- 创建`/data/adb/modules/Thread-Optimization/Flags/keep_custom_rule`用于安装时，增量更新用户修改/添加的规则。
+- 创建`/data/adb/modules/Thread-Optimization/Flags/keep_Asoulopt`用于处理和[Asoulopt](https://github.com/nakixii/Magisk_AsoulOpt)冲突的包名，会删掉和**Asoulopt**冲突的规则，不影响**Asoulopt**运行。
 - 在zip压缩包添加空文件`/Flags/zip_first`，**会优先使用模块压缩包的flag文件，覆盖模块目录的flag文件**。
 
 > ### 提示(Tips)
 - **Flags文件**创建或者删除后，需要**重新刷模块压缩包入生效**。
 - 例如我下载了`线程优化二改211.zip`刷入后。
-- 想要实现(取消)增加更新，那么我在创建(删除)`/data/adb/modules/AppOpt_Aloazny/Flags/keep_custom_rule`后，**需要再次重新刷模块压缩包(`线程优化二改211.zip`)入生效**。
+- 想要实现(取消)增加更新，那么我在创建(删除)`/data/adb/modules/Thread-Optimization/Flags/keep_custom_rule`后，**需要再次重新刷模块压缩包(`线程优化二改211.zip`)入生效**。
 
 > ### 线程配置理念和教程
 - [教程和理念](coolmarket://feed/63785290)

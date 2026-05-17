@@ -1,7 +1,7 @@
 # 🚩 AppOpt (Aloazny二改) Flags 功能说明书
 
 > **小白必读**：这些 `Flags` 就像是模块的“开关”。
-> 你只需要在 `/data/adb/modules/AppOpt_Aloazny/Flags/` 目录下创建或删除对应的**空文件**
+> 你只需要在 `/data/adb/modules/Thread-Optimization/Flags/` 目录下创建或删除对应的**空文件**
 > 就能控制模块的功能。
 > 
 > **注意**：除了卸载，所有操作都不需要重启手机。

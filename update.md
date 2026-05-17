@@ -55,7 +55,7 @@
 - 添加InstallerX Revived(`com.rosan.installer.x.revived`)适配。
 #### **29.3**
 - 取消默认打开`dex2oat`优化。
-- 如果遇到异常，删掉`/data/adb/modules/AppOpt_Aloazny/Flags/dexota_modtify`Flags文件，**重新刷入模块+重启即可。**
+- 如果遇到异常，删掉`/data/adb/modules/Thread-Optimization/Flags/dexota_modtify`Flags文件，**重新刷入模块+重启即可。**
 #### **29.2**
 - 更改`dex2oat`优化里其他冷门核心配置时，会设定成所有CPU范围，不影响后续操作。
 - 添加Degrees of Lewdity (`com.vrelnir.DegreesOfLewdity`)适配。
@@ -97,7 +97,7 @@
 - 紧急修复一个MT管理器(`26040453`)版本无法仔压缩包运行`uninstall.sh`脚本的bug，这个版本没法运行后台脚本，只能运行前台。
 #### **28.3**
 - 添加`keep_Asoulopt`和`zip_first`两个flag文件。
-- 创建`/data/adb/modules/AppOpt_Aloazny/Flags/keep_Asoulopt`用于处理和[Asoulopt](https://github.com/nakixii/Magisk_AsoulOpt)冲突的包名，会删掉和**Asoulopt**冲突的规则，不影响**Asoulopt**运行。
+- 创建`/data/adb/modules/Thread-Optimization/Flags/keep_Asoulopt`用于处理和[Asoulopt](https://github.com/nakixii/Magisk_AsoulOpt)冲突的包名，会删掉和**Asoulopt**冲突的规则，不影响**Asoulopt**运行。
 - 在zip压缩包添加空文件`/Flags/zip_first`，**会优先使用模块压缩包的flag文件，覆盖模块目录的flag文件**。
 #### **28.2**
 - 修复`2+3+2+1`一个替换错误。
@@ -376,7 +376,7 @@
 - 添加`增量更新`状态显示。
 #### **18.7**
 - 添加增量更新模式(**实验**)，在启用`update_config`和`modtify_config`情况下，用户自行添加的规则会被添加到配置文件最底部的`#用户规则`类别，**规则不一致时以用户修改的规则为主**。
-- flag文件以`/data/adb/modules/AppOpt_Aloazny/keep_custom_rule`空文件作为标识。
+- flag文件以`/data/adb/modules/Thread-Optimization/keep_custom_rule`空文件作为标识。
 #### **18.6**
 - 添加Firefox(火狐)浏览器 (`org.mozilla.firefox`,`org.mozilla.fenix`)适配。
 - 添加安装时`program_ctrl.sh`热更新。
@@ -386,7 +386,7 @@
 - 调整`Aloazny.sh`，`program_ctrl.sh`，`service.sh`脚本。
 #### **18.4**
 - 添加vivaldi浏览器 (`com.vivaldi.browser`)，三星浏览器( Samsung Internet Browser) (`com.sec.android.app.sbrowser`,`com.sec.android.app.sbrowser.beta`)适配。
-- 新增通过创建`/data/adb/modules/AppOpt_Aloazny/{disable_program/enable_program}`空文件，用于控制是否禁用一些冲突(**如果存在**)的系统进程，具体请自行查看`program_ctrl.sh`脚本。
+- 新增通过创建`/data/adb/modules/Thread-Optimization/{disable_program/enable_program}`空文件，用于控制是否禁用一些冲突(**如果存在**)的系统进程，具体请自行查看`program_ctrl.sh`脚本。
 #### **18.3**
 - 调整`Aloazny.sh`和`uninstall.sh`脚本。
 #### **18.2**
@@ -417,7 +417,7 @@
 #### **17.2**
 - 修复部分联发科设备，无法使用`sed`命令配置文件不准确的问题。
 #### **17.1**
-- 添加`dex2oat`的prop值修改，用于优化安装应用速度和运行速度，默认不修改，要修改，自行创建`/data/adb/modules/AppOpt_Aloazny/dexota_modtify`空文件。
+- 添加`dex2oat`的prop值修改，用于优化安装应用速度和运行速度，默认不修改，要修改，自行创建`/data/adb/modules/Thread-Optimization/dexota_modtify`空文件。
 - 调整**永劫无间、系统UI线程**线程。
 #### **17.0**
 - 修复一个`Aloazny.sh`MIUI版本识别错误的bug。
@@ -556,7 +556,7 @@
 - 添加部落冲突(play)(`com.supercell.clashofclans`)和皇室战争(play)(`com.supercell.clashroyale`)适配。
 #### **12.0**
 - 调整萤火突击线程。
-- 鉴于有的人完全不懂创建空文件，**默认第一次刷入时创建`/data/adb/modules/AppOpt_Aloazny/update_config`和`modtify_config`**。
+- 鉴于有的人完全不懂创建空文件，**默认第一次刷入时创建`/data/adb/modules/Thread-Optimization/update_config`和`modtify_config`**。
 #### **11.9**
 - 添加萤火突击(`com.netease.yhtj.m4399`,`com.netease.yhtj.gg`,`com.netease.yhtj.aligames`,`com.netease.yhtj.mi`)适配。
 #### **11.8**
@@ -602,7 +602,7 @@
 - 调整`AppOpt`可能存在的问题。
 - 添加巅峰极速(`com.netease.race`,`com.netease.race.ua`)，阴阳师(`com.netease.onmyoji`,`com.netease.onmyoji.vivo`,`com.netease.onmyoji.wyzymnqsd_cps`,`com.netease.onmyoji.bili`,`com.netease.onmyoji.mi`)，对峙2 (standoff2) (`com.axlebolt.standoff2.huawei`,`com.axlebolt.standoff2`)适配。
 #### **10.1**
-- 创建`/data/adb/modules/AppOpt_Aloazny/delete_game_config`空文件，**就会删除自带的游戏配置**。
+- 创建`/data/adb/modules/Thread-Optimization/delete_game_config`空文件，**就会删除自带的游戏配置**。
 #### **10.0**
 - 添加QQ浏览器国际版(`com.tencent.mtt.intl`)，QQ浏览器(`com.tencent.mtt`)，M浏览器(3.X)(`cn.mujiankeji.mbrowser`)适配。
 #### **9.9**
@@ -643,7 +643,7 @@
 #### **8.4**
 - 添加光遇 (`com.netease.sky`,`com.tgc.sky.android`,`com.netease.sky.nearme.gamecenter`,`com.netease.sky.bilibili`,`com.tencent.tmgp.eyou.eygy`,`com.netease.sky.mi`,`com.netease.sky.m4399`,`com.netease.sky.vivo`)，绝区零 (`com.miHoYo.Nap`,`com.mihoyo.nap.bilibili`)适配，Comic Screen (`com.viewer.comicscreen`)，Perfect Viewer (`com.rookiestudio.perfectviewer`)，MH-ARK (`com.mhdh.mh_ark`)，Sudachi (`org.sudachi.sudachi_emu`)。
 #### **8.3**
-- 尝试修复部分设备`AppOpt`无法启动的情况，如果`AppOpt`无法启动，把`/data/adb/modules/AppOpt_Aloazny/affinity_manager.log`文件通过[文叔叔](https://www.wenshushu.cn/) (免登陆)发给我(记得复制链接)。
+- 尝试修复部分设备`AppOpt`无法启动的情况，如果`AppOpt`无法启动，把`/data/adb/modules/Thread-Optimization/affinity_manager.log`文件通过[文叔叔](https://www.wenshushu.cn/) (免登陆)发给我(记得复制链接)。
 #### **8.2**
 - `action.sh`添加重启`AppOpt`的选项，不知道执行`action.sh`，有的设备会让AppOpt终止。
 #### **8.1**
@@ -770,11 +770,11 @@ exp.com{Thread-*}=4-6
 #### **3.9**
 - 改成`aarch64-linux-android23-clang`编译，和Magisk最低支持的版本同步。
 #### **3.8**
-- 修复刷入后不修改`/data/adb/modules_update/AppOpt_Aloazny/applist.prop`的问题。
+- 修复刷入后不修改`/data/adb/modules_update/Thread-Optimization/applist.prop`的问题。
 - 修改机械性适配地部分描述。
 #### **3.7**
-- 添加机械性适配`6+2` `3+4+1` `4+4` CPU核心配置的适配，创建`/data/adb/modules/AppOpt_Aloazny/modtify_config`空文件，就会修改配置。
-- 创建`/data/adb/modules/AppOpt_Aloazny/update_config`空文件，就会使用模块的配置，而不是读取上一次配置。
+- 添加机械性适配`6+2` `3+4+1` `4+4` CPU核心配置的适配，创建`/data/adb/modules/Thread-Optimization/modtify_config`空文件，就会修改配置。
+- 创建`/data/adb/modules/Thread-Optimization/update_config`空文件，就会使用模块的配置，而不是读取上一次配置。
 #### **3.6**
 - 云适配了`CF`。
 #### **3.5**
@@ -850,9 +850,9 @@ exp.com{Thread-*}=4-6
 #### **1.1**
 - 添加一个命令参数`-f 配置文件路径` `--log=日志文件路径` `--debug=填写true或者false`，如果不指定，那么就是模块默认配置。
 - 英文说明`Usage: %s [-f config_file] [--log=log_file] [--debug=(true|false)]`
-- 例如下面这个命令就是，指定配置文件`/data/adb/modules/AppOpt_Aloazny/applist.prop`，日志文件`/data/adb/modules/AppOpt_Aloazny/affinity_manager.log`，`关闭调试日志`。
+- 例如下面这个命令就是，指定配置文件`/data/adb/modules/Thread-Optimization/applist.prop`，日志文件`/data/adb/modules/Thread-Optimization/affinity_manager.log`，`关闭调试日志`。
 ```shell
-AppOpt -f /data/adb/modules/AppOpt_Aloazny/applist.prop --log=/data/adb/modules/AppOpt_Aloazny/affinity_manager.log --debug=false
+AppOpt -f /data/adb/modules/Thread-Optimization/applist.prop --log=/data/adb/modules/Thread-Optimization/affinity_manager.log --debug=false
 ```
 #### **1.0**
 - 添加一个8+的`surfaceflinger`和`vendor.qti.hardware.display.composer-service`配置服务。
@@ -878,7 +878,7 @@ AppOpt -f /data/adb/modules/AppOpt_Aloazny/applist.prop --log=/data/adb/modules/
 - 加回`dumpsys`作为备选，获取屏幕状态。
 - 添加`scene`核心分配名单检测(目前无法检测开关，因为我太菜)和其他核心模块检测。
 #### **0.1**
-- 更改`module_id`为`AppOpt_Aloazny`。
+- 更改`module_id`为`Thread-Optimization`。
 - 更改配置文件`applist.conf`为`applist.prop`，**舒服我自己**用MT管理器查看配置文件有高亮。
 - 更改`uninstall`的`setprop`为`resetprop`，避免卸载模块可能发生的开机阻塞。
 - 添加一个shell脚本更正部分用户乱写的`applist.conf(applist.prop)`。
