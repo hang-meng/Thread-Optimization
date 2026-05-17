@@ -1,6 +1,6 @@
 # 线程优化++
 
-基于 [AppOpt](https://gitee.com/sutoliu/AppOpt) 二改的 Magisk 模块，用于 Android 应用线程 CPU 亲和性调度优化。
+基于 [AppOpt](https://gitee.com/sutoliu/AppOpt)（[Aloazny 二改版](https://aloazny.github.io/AppOpt_Aloazny/)）再改的 Magisk 模块，用于 Android 应用线程 CPU 亲和性调度优化。
 
 ## 简介
 
@@ -65,6 +65,7 @@ com.example.*{Thread-*}=0-3
 ## 感谢
 
 - [AppOpt](https://gitee.com/sutoliu/AppOpt) - 原作 [@SutoLiu](https://www.coolapk1s.com/u/SutoLiu) (GPLv3)
+- [AppOpt_Aloazny](https://aloazny.github.io/AppOpt_Aloazny/) - Aloazny 二改版
 - [uthash](https://troydhanson.github.io/uthash/) - 哈希表库 (BSD)
 
 ## 协议
