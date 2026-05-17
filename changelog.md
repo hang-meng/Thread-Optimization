@@ -1,20 +1,20 @@
-### 蓝奏云下载地址(密码:111)
-- [点击转跳](https://aloazny.lanzouo.com/b00je9nu1i)
-- [1.3.5版本](https://aloazny.lanzouo.com/b00jeipeeb)
-- [实时模式](https://aloazny.lanzouo.com/b00jeku6cd)
-- [Ebpf版本(测试)](https://aloazny.lanzouv.com/b00jf0lz0h)
-- [小飞机盘](https://share.feijipan.com/s/AN2lFUeN)
+### 蓝奏云下载地址(密码:1314)
+- [点击转跳](https://wwbez.lanzouw.com/b01bjf7ufa)
 
 ### 注意
-- [Github地址](https://github.com/Aloazny/AppOpt_Aloazny)
-- [查看适配应用列表](https://aloazny.github.io/AppOpt_Aloazny/#%E9%80%82%E9%85%8D%E5%88%97%E8%A1%A8)
-- [查看Flags文件说明](https://aloazny.github.io/AppOpt_Aloazny/#%E6%8F%90%E7%A4%BA)
+- [Github地址](https://github.com/hang-meng/Thread-Optimization)
+- [查看适配应用列表](https://github.com/hang-meng/Thread-Optimization/blob/main/%E9%80%82%E9%85%8D%E5%BA%94%E7%94%A8.md)
 
 ### 更新日志
-### **30.3**
-- 修复`Get_mem_val`函数一个bug。
-- 调整**dex2oat优化值**。
-#### **30.2**
-- 调整`6+2`高性能核心，日用应用`RenderThread`使用`4-5`大核，`*.ui`和`*.raster`使用大核簇+超大核簇，减少固定使用超大核带来的功耗开销。
-- 调整`2+3+2+1`的日用应用`RenderThread`使用`2-4`大核心，如果感到卡顿，可以退回上个版本。
-- `Aloazny.sh`脚本利用`Get_mem_val`函数获取内存信息，减少对`awk`依赖。
+### **30.5**
+- **模块重命名**为「线程优化++」，作者 M_eang。
+- **AppOpt 二进制全面重构**：
+  - 修复 `proc_collect` 内存泄漏。
+  - 新增前后台感知调度。
+  - 核心分配架构自动适配重构（拓扑占位符方案）。
+  - 合并重复 `sched_getaffinity` 调用。
+  - 自适应轮询间隔。
+  - 线程数据智能复用（~80% 扫描跳过）。
+  - `tracked_pids` 改为 `uthash` 哈希表。
+  - 移除 `-static`，二进制 ~45KB。
+- **fix_applist_conf 性能优化**：sed 合并为 1 次调用。
