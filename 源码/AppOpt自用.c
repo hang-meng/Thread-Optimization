@@ -41,6 +41,7 @@ typedef struct {
     cpu_set_t cpus;
     bool is_wildcard;
     int priority;
+    int tid_index;  // -1 = 匹配所有同名线程, 0 = 第1个, 1 = 第2个 ...
 } AffinityRule;
 
 typedef struct {
@@ -499,6 +500,7 @@ static AppConfig* load_config(const char* config_file, const CpuTopology* topo, 
 
         char* br = strchr(key, '{');
         char* thread = "";
+        int parsed_tid_index = -1;
         if (br) {
             *br++ = '\0';
             char* eb = strchr(br, '}');
@@ -518,6 +520,32 @@ static AppConfig* load_config(const char* config_file, const CpuTopology* topo, 
                 continue;
             }
             thread = strtrim(br);
+            // 解析 TID 索引: GameThread[2] -> tid_index=2, thread="GameThread"
+            {
+                char* lb = strchr(thread, '[');
+                if (lb && lb > thread) {
+                    char* rb = strchr(lb, ']');
+                    if (rb && rb > lb + 1) {
+                        *rb = '\0';
+                        char* idx_end;
+                        long idx = strtol(lb + 1, &idx_end, 10);
+                        if (idx_end == rb && idx >= 0 && idx < 65536) {
+                            parsed_tid_index = (int)idx;
+                            *lb = '\0';
+                            // 重新 trim，去掉 [n] 前可能存在的空格
+                            char* trimmed = strtrim(br);
+                            thread = trimmed;
+                        } else {
+                            *rb = ']';
+                            LOG_W("第 %zu 行无效 TID 索引: %s\n", line_number, lb);
+                            continue;
+                        }
+                    } else {
+                        LOG_W("第 %zu 行无效 TID 索引语法: %s\n", line_number, thread);
+                        continue;
+                    }
+                }
+            }
         } else {
             char* eb = strchr(key, '}');
             if (eb) {
@@ -534,7 +562,7 @@ static AppConfig* load_config(const char* config_file, const CpuTopology* topo, 
 
         bool is_duplicate = false;
         for (size_t i = 0; i < num_rules; i++) {
-            if (!strcmp(rules[i].pkg, pkg) && !strcmp(rules[i].thread, thread)) {
+            if (!strcmp(rules[i].pkg, pkg) && !strcmp(rules[i].thread, thread) && rules[i].tid_index == parsed_tid_index) {
                 LOG_W("第 %zu 行重复规则：%s{%s}=%s，请检查配置\n", line_number, pkg, thread, value);
                 is_duplicate = true;
                 break;
@@ -559,6 +587,7 @@ static AppConfig* load_config(const char* config_file, const CpuTopology* topo, 
         rule->pkg[MAX_PKG_LEN - 1] = '\0';
         strncpy(rule->thread, thread, MAX_THREAD_LEN - 1);
         rule->thread[MAX_THREAD_LEN - 1] = '\0';
+        rule->tid_index = parsed_tid_index;
         CPU_ZERO(&rule->cpus);
 
         char invalid_range[64] = {0};
@@ -997,6 +1026,10 @@ static void proc_collect(const AppConfig* cfg, ProcCache* cache, size_t* count) 
 
             struct dirent* tent;
             int task_entries = 0;
+            // 同名线程计数器：用于 TID 索引语法 {ThreadName[n]}
+            #define MAX_THREAD_NAME_COUNTS 128
+            struct { char name[MAX_THREAD_LEN]; int count; } tname_counts[MAX_THREAD_NAME_COUNTS];
+            int num_tname_counts = 0;
             while ((tent = readdir(task_dir))) {
                 char *end2;
                 long tid = strtol(tent->d_name, &end2, 10);
@@ -1014,6 +1047,26 @@ static void proc_collect(const AppConfig* cfg, ProcCache* cache, size_t* count) 
                 close(tid_fd);
 
                 strtrim(tname);
+
+                // 统计同名线程的出现次数
+                int tname_occurrence = 1;
+                {
+                    int found_idx = -1;
+                    for (int k = 0; k < num_tname_counts; k++) {
+                        if (!strcmp(tname_counts[k].name, tname)) {
+                            tname_counts[k].count++;
+                            tname_occurrence = tname_counts[k].count;
+                            found_idx = k;
+                            break;
+                        }
+                    }
+                    if (found_idx < 0 && num_tname_counts < MAX_THREAD_NAME_COUNTS) {
+                        strncpy(tname_counts[num_tname_counts].name, tname, MAX_THREAD_LEN - 1);
+                        tname_counts[num_tname_counts].name[MAX_THREAD_LEN - 1] = '\0';
+                        tname_counts[num_tname_counts].count = 1;
+                        num_tname_counts++;
+                    }
+                }
 
                 if (proc->num_threads >= proc->threads_cap) {
                     size_t new_cap = proc->threads_cap * 2;
@@ -1035,12 +1088,14 @@ static void proc_collect(const AppConfig* cfg, ProcCache* cache, size_t* count) 
                     const AffinityRule* rule = proc->thread_rules[i];
                     const char* rule_thread = rule->thread;
 
-                    if (strcmp(rule_thread, tname) == 0 ||
+                    if ((strcmp(rule_thread, tname) == 0 &&
+                         (rule->tid_index < 0 || rule->tid_index == tname_occurrence - 1)) ||
                         (rule_thread[0] == '\0' && (tname[0] == '\0' || strcmp(tname, " ") == 0))) {
                         CPU_OR(&ti->cpus, &ti->cpus, &rule->cpus);
                         matched = rule->cpuset_dir;
                         break;
-                    } else if (rule->priority < 1000 && fnmatch(rule_thread, tname, 0) == 0) {
+                    } else if (rule->priority < 1000 && fnmatch(rule_thread, tname, 0) == 0 &&
+                               (rule->tid_index < 0 || rule->tid_index == tname_occurrence - 1)) {
                         if (rule->priority > highest_priority) {
                             highest_priority = rule->priority;
                             best_rule_idx = i;
