@@ -18,3 +18,4 @@
   - `tracked_pids` 改为 `uthash` 哈希表。
   - 移除 `-static`，二进制 ~45KB。
 - **fix_applist_conf 性能优化**：sed 合并为 1 次调用。
+- **同名线程 TID 索引**：`{ThreadName[n]}` 语法精确区分同名线程，例如 `{GameThread[0]}=6-7` 只绑第一个。

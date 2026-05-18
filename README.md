@@ -14,6 +14,7 @@
 - **智能数据复用**：同 PID 线程数未变时跳过 I/O，~80% 扫描可跳过
 - **架构自动适配**：拓扑占位符方案，适配任意 CPU 架构无需改脚本
 - **通配符 & 优先级**：进程名支持通配符，线程名支持精确优先匹配
+- **同名线程区分**：`{GameThread[2]}` 语法精确绑定第 n+1 个同名线程，不再一刀切
 - **二进制轻量化**：动态链接编译，体积 ~45KB（原 2.4MB）
 
 ## 安装
@@ -58,6 +59,13 @@
 com.example.app{Thread-1}=4-6
 com.example.app{RenderThread}=7
 com.example.*{Thread-*}=0-3
+```
+
+支持 `{ThreadName[n]}` 精确区分同名线程（`n`=0 为第一个）：
+```
+com.tencent.tmgp.dfm{GameThread[0]}=6-7
+com.tencent.tmgp.dfm{GameThread[1]}=4-5
+com.tencent.tmgp.dfm{GameThread}=0-3
 ```
 
 每行一个规则，修改后重启 AppOpt（执行模块 Action 按钮）即可生效。
