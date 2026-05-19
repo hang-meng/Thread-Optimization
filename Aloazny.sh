@@ -532,12 +532,11 @@ limit_log_file "${log_file}"
 local error="$(grep -v '\[I\]' "$log_file" | sed '/^[[:space:]]*$/d' | head -n 10)"
 if [ "${error}" != "" ];then
 ui_print "
-- 有错误日志输出
-- 点击magisk右上角保存
-- 在/sdcard/Download(/storage/emulated/0/Download/)目录能找到错误日志。
-${error}
+- 配置规则解析异常，不影响正常使用。
+- 如需消除，请更新模块到最新版本。
+- 详情: /storage/emulated/0/Download/AppOpt错误日志.log
 "
-local log_error_output_file="/storage/emulated/0/Download/$CUSTOM_PROGRAM错误日志.log"
+local log_error_output_file="/storage/emulated/0/Download/AppOpt错误日志.log"
 mkdir -p "${log_error_output_file%/*}"
 cp -af "${log_file}" "$log_error_output_file"
 [ -f "${module_config}" ] && echo -e "\n#配置文件$(cat "${module_config}" )\n#END" >> "$log_error_output_file"

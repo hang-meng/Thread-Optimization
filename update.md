@@ -3,6 +3,10 @@
 #### 模块日志
 
 
+### **v1.0.2**
+- **紧急修复**：v1.0.1 中 TID 索引语法 `{ThreadName[n]}` 的解析逻辑存在缺陷。`strtol` 对 `[Rr]ender*` / `[Ww]orker*` / `[0-9]` 等 fnmatch bracket expression 解析失败后，`else` 分支错误执行 `continue`，导致整条规则被跳过。影响范围覆盖所有使用 bracket expression 的规则，AppOpt 加载后无有效规则、进程异常退出。修复方案：`else` 分支移除 `continue`，解析失败时保留 `parsed_tid_index = -1`，线程名原样交由 fnmatch 处理。
+- **错误日志显示优化**：`show_error_log_content` 不再将错误日志行直接输出到安装界面，替换为固定提示语 "配置规则解析异常，不影响正常使用。如需消除，请更新模块到最新版本。"，日志详情仍拷贝至 `/storage/emulated/0/Download/`。
+
 ### **30.5**
 - **模块重命名**为「线程优化++」，作者加入 M_eang。
 - **AppOpt 二进制全面重构**：
