@@ -521,6 +521,7 @@ static AppConfig* load_config(const char* config_file, const CpuTopology* topo, 
             }
             thread = strtrim(br);
             // 解析 TID 索引: GameThread[2] -> tid_index=2, thread="GameThread"
+            // 仅当 [n] 内为纯十进制数字且 ≥0 时才作为索引处理，否则保留为 fnmatch bracket expression
             {
                 char* lb = strchr(thread, '[');
                 if (lb && lb > thread) {
@@ -532,18 +533,14 @@ static AppConfig* load_config(const char* config_file, const CpuTopology* topo, 
                         if (idx_end == rb && idx >= 0 && idx < 65536) {
                             parsed_tid_index = (int)idx;
                             *lb = '\0';
-                            // 重新 trim，去掉 [n] 前可能存在的空格
                             char* trimmed = strtrim(br);
                             thread = trimmed;
                         } else {
                             *rb = ']';
-                            LOG_W("第 %zu 行无效 TID 索引: %s\n", line_number, lb);
-                            continue;
+                            // 非纯数字 → 保留为 fnmatch bracket expression，不作 TID 索引处理
                         }
-                    } else {
-                        LOG_W("第 %zu 行无效 TID 索引语法: %s\n", line_number, thread);
-                        continue;
                     }
+                    // else: rb == NULL 或空括号 [] → 保留原样走 fnmatch
                 }
             }
         } else {
