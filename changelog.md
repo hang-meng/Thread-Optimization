@@ -6,6 +6,9 @@
 - [查看适配应用列表](https://github.com/hang-meng/Thread-Optimization/blob/main/%E9%80%82%E9%85%8D%E5%BA%94%E7%94%A8.md)
 
 ### 更新日志
+### **v1.0.3**
+- 更新应用线程绑定规则。
+
 ### **v1.0.2**
 - **紧急修复**：v1.0.1 引入的同名线程 TID 索引语法（`{ThreadName[n]}`）在解析时未能区分 fnmatch 括号表达式（`[Rr]ender*`、`[Ww]orker*`、`[0-9]` 等），导致这些规则被整行丢弃，AppOpt 启动后无规则可用、进程自动退出。
 - **错误提示简化**：action.sh 不再刷屏输出 `[W] 第X行无效TID索引` 日志，替换为一句话提示，日志详情仍可到文件查看。
