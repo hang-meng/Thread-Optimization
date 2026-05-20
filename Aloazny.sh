@@ -932,11 +932,26 @@ local my_module_Flags_folder="$MY_MODULE_FOLDER/Flags"
 for flag in dexota_modtify delete_game_config keep_custom_rule modtify_config update_config enable_program disable_program
 do
 	old_flag_file="${MY_MODULE_FOLDER}/$flag"
+	# 防止用户误建同名目录导致文件结构损坏
+	if [ -d "${old_flag_file}" ] ;then
+		echo "- 检测到 [$flag] 被误建为目录，已自动清理"
+		rm -rf "${old_flag_file}"
+	fi
 	if [ -f "${old_flag_file}" ] ;then
 		mkdir -p "${my_module_Flags_folder}"
 		mv -f "${old_flag_file}" "${my_module_Flags_folder}"
 	fi
 done
+# 同时检查 Flags/ 下的误建目录
+if [ -d "$my_module_Flags_folder" ]; then
+	for flag_file in "$my_module_Flags_folder"/*; do
+		[ -d "$flag_file" ] && flag_name="${flag_file##*/}" && {
+			for known in dexota_modtify delete_game_config keep_custom_rule modtify_config update_config enable_program disable_program; do
+				[ "$flag_name" = "$known" ] && echo "- 检测到 Flags/$flag_name 被误建为目录，已自动清理" && rm -rf "$flag_file" && break
+			done
+		}
+	done
+fi
 if [ -f "$install_module_Flags_folder/zip_first" ] ;then
 	rm -rf "$my_module_Flags_folder"
 	mkdir -p "$my_module_Flags_folder"
@@ -1210,6 +1225,11 @@ add_dexota_prop "${module_config%/*}/Flags/dexota_modtify"
 fix_applist_conf "${module_config}"
 get_other_thread "${module_config}"
 write_core_information "${module_config}"
+# Flag 功能提示（仅刷入时显示）
+if [ -f "${TMPDIR}/module.prop" ]; then
+	[ ! -f "${module_config%/*}/Flags/dexota_modtify" ] && echo "- 提示：dex2oat 优化默认关闭，创建 Flags/dexota_modtify 空文件即可开启"
+	[ ! -f "${module_config%/*}/Flags/keep_custom_rule" ] && echo "- 提示：增量更新默认关闭，创建 Flags/keep_custom_rule 空文件即可保留自定义规则"
+fi
 show_error_log_content
 [ -f "${TMPDIR}/module.prop" ] && rm -rf "$MODPATH/源码" "$MODPATH/update.md" "$MODPATH/README.md" "$MODPATH/适配应用.md" "$MODPATH/LICENSE" "$MODPATH/changelog.md" "$MODPATH/update.json" "${MODPATH}/文档"
 Move_platform_bin

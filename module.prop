@@ -1,7 +1,7 @@
 id=Thread-Optimization
 name=线程优化++
-version=v1.0.3
-versionCode=103
+version=v1.0.4
+versionCode=104
 author=M_eang
 description=一个支持自定义规则的安卓应用线程优化程序。
 updateJson=https://aloazny.github.io/AppOpt_Aloazny/update/update.json

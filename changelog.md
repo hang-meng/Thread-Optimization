@@ -6,6 +6,10 @@
 - [查看适配应用列表](https://github.com/hang-meng/Thread-Optimization/blob/main/%E9%80%82%E9%85%8D%E5%BA%94%E7%94%A8.md)
 
 ### 更新日志
+### **v1.0.4**
+- **安全修复**：`Move_old_flag()` 增加同名目录检测，防止用户误建文件夹导致模块结构损坏。
+- **安装提示**：刷入时提示 dex2oat 和增量更新 Flag 的使用方法。
+
 ### **v1.0.3**
 - 更新应用线程绑定规则。
 
